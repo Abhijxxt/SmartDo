@@ -1,26 +1,42 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
+import prisma from "@prisma/client";
 
-enum Status {
-    INCOMPLETE,
-    COMPLETE
-}
+const todo_schema = z.object({
+    title: z.string().min(1).max(255),
+    description: z.string().min(1)
+})
 
-type Todo = {
-    title : string,
-    description: string,
-    status: Status,
-    createdOn?: Date,
-    updatedOn?: Date,
-}
+// enum Status {
+//     INCOMPLETE,
+//     COMPLETE
+// }
+// type Todo = {
+//     id: number,
+//     title : string,
+//     description: string,
+//     status?: Status,
+//     createdAt?: Date,
+//     updatedAt?: Date,
+// }
 
 export async function POST(request: NextRequest) {
-    const body: Todo = await request.json();
-    console.log(body)
-    if(body != null) {
-        return NextResponse.json({data: "Data reached", status: 200})
-    } else {
-        return NextResponse.json({data: "Data not received!", status: 500})
+    const body = await request.json();
+    const validated_body = todo_schema.safeParse(body);
+    // BAD REQUEST
+    if(!validated_body.success) {
+        return NextResponse.json(validated_body.error, {status: 400})
     }
+    // GOOD REQUEST
+    // const newTodo = await prisma.todo.create({
+    //     data: {
+    //         title: body.title,
+    //         description: body.description
+    //     }
+    // });
+
+    // return NextResponse.json(newTodo, {status: 201})
+
 }
 
 export function GET() {
