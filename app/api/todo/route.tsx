@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import prisma from "@prisma/client";
+import { prisma } from "@/prisma/client";
 
 const todo_schema = z.object({
     title: z.string().min(1).max(255),
@@ -21,6 +21,7 @@ const todo_schema = z.object({
 // }
 
 export async function POST(request: NextRequest) {
+    console.log("Called");
     const body = await request.json();
     const validated_body = todo_schema.safeParse(body);
     // BAD REQUEST
@@ -28,14 +29,14 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(validated_body.error, {status: 400})
     }
     // GOOD REQUEST
-    // const newTodo = await prisma.todo.create({
-    //     data: {
-    //         title: body.title,
-    //         description: body.description
-    //     }
-    // });
+    const newTodo = await prisma.todo.create({
+        data: {
+            title: body.title,
+            description: body.description
+        }
+    });
 
-    // return NextResponse.json(newTodo, {status: 201})
+    return NextResponse.json(newTodo, {status: 201})
 
 }
 
