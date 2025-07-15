@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 
+enum Status {
+    INCOMPLETE,
+    COMPLETE
+}
+
 type Todo = {
     title : string,
     description: string,
+    status: Status,
     createdOn?: Date,
     updatedOn?: Date,
 }
