@@ -6,16 +6,16 @@ import { redirect, RedirectType } from "next/navigation";
 
 export default function Home() {
 
-  const getTodos = async () => {
-    const response = await fetch("/api/todo")
-    const data = await response.json()
-    // console.log(data.length)
-    if(data.length > 0) {
-      redirect('/home', RedirectType.replace);
-    }
-  }
+  // const getTodos = async () => {
+  //   const response = await fetch("/api/todo")
+  //   const data = await response.json()
+  //   // console.log(data.length)
+  //   if(data.length > 0) {
+  //     redirect('/home', RedirectType.replace);
+  //   }
+  // }
 
-  useEffect(() => {getTodos()}, [])
+  // useEffect(() => {getTodos()}, [])
 
   return (
    <div className="marketing-page h-[80vh] w-100% flex flex-col justify-center items-center">

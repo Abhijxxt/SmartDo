@@ -23,7 +23,6 @@ export default function CreateTodo() {
         if(!response.ok) {
             alert("Something went wrong");
         } else {
-            alert("Successfully added");
             event.target[0].value = "";
             event.target[1].value = "";
             redirect('/home', RedirectType.push);

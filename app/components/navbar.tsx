@@ -15,7 +15,7 @@ export default function Navbar() {
                 </div>
                 <div className="account-container flex justify-center items-center ml-4">
                     <p>Username</p>
-                    <button className="bg-blue-950 text-white p-1 rounded-sm ml-4 hover:bg-amber-300 transition-all">↓</button>
+                    {/* <button className="bg-blue-950 text-white p-1 rounded-sm ml-4 hover:bg-amber-300 transition-all">↓</button> */}
                 </div>
             </div>
         </header>
