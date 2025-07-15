@@ -40,6 +40,9 @@ export async function POST(request: NextRequest) {
 
 }
 
-export function GET() {
-    return NextResponse.json({data: "This is an API in NextJS", status: 200})    
+export async function GET() {
+
+    const data = await prisma.todo.findMany(); 
+
+    return NextResponse.json(data,{status: 200})    
 }
