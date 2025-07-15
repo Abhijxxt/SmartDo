@@ -1,15 +1,31 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import Todo from "../components/todo";
+
+enum Status {
+    INCOMPLETE,
+    COMPLETE
+}
+
+type Todo_type = {
+    id: number,
+    title : string,
+    description: string,
+    status?: Status,
+    createdAt?: Date,
+    updatedAt?: Date,
+}
 
 export default function HomePage() {
 
-    const [todo, setTodo] = useState({});
+    const [todos, setTodo] = useState([]);
 
     const getTodos = async () => {
         const response = await fetch("/api/todo");
         const data = await response.json();
-        console.log(data)
+        setTodo(data);
+        console.log(data); // Log the fetched data directly
     }
 
     useEffect(() => {getTodos()}, [])
@@ -17,7 +33,11 @@ export default function HomePage() {
     return (
         <div className="todo-container">
             <div className="todo-list-container">
-                {todo && "hello"}
+                {
+                    todos && todos.map((todo : Todo_type) => {
+                        return <Todo key={todo.id} title={todo.title} description={todo.description} status={todo.status} />
+                    })
+                }
             </div>
             <div className="add-todo-button-container">
 
