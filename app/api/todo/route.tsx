@@ -46,3 +46,29 @@ export async function GET() {
 
     return NextResponse.json(data,{status: 200})    
 }
+
+export async function PATCH(request: NextRequest) {
+    console.log("HERE")
+    const body = await request.json();
+    console.log(body.id + " : " + body.status)
+    const updateTodo = await prisma.todo.update({
+        where: {
+            id: body.id
+        },
+        data: {
+            status: body.status
+        }
+    })
+    return NextResponse.json(updateTodo, {status: 200});
+}
+
+export async function DELETE(request: NextRequest) {
+    const body = await request.json();
+    console.log(body.id)
+    const deleteTodo = await prisma.todo.delete({
+        where: {
+            id: body.id
+        }
+    })
+    return NextResponse.json(deleteTodo, {status: 200})
+}
